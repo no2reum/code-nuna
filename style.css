@@ -1,0 +1,40 @@
+* {
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    justify-content: center;
+    padding-top: 100px;
+}
+.content {
+    width: 300px;
+    height: 200px;
+    position: relative;
+    display: flex;flex-direction: column;
+    border: solid 2px ;
+}
+
+h1 {
+    background-color: bisque;
+    width: 100%;
+    text-align: center;
+}
+.ary {
+    
+}
+
+@media (max-width: 400px){
+    .content {
+        h1 {
+            font-size: 13vw;
+            max-width: 300px;
+        }
+        #result {
+            font-size: 10vw;
+        }
+        #chance-count {
+           font-size: 10vw; 
+        }
+    }
+}

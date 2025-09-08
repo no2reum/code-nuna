@@ -9,12 +9,19 @@
     //유저가 이미 입력한 숫자를 또 입력하면, 알려준다, 기회를 까지 않는다
 
     let computerNum = 0
-    let palyBtn = document.getElementById("palyBtn")
+    let playBtn = document.getElementById("playBtn")
     let userInput = document.getElementById("user-input")
     let resultArea = document.getElementById("result")
+    let resetBtn = document.getElementById("resetBtn")
+    let chance = 5
+    // let gameOver = false
+    let chanceArea = document.getElementById("chance-count")
+    let history = []
 
-    palyBtn.addEventListener("click", play)
+    playBtn.addEventListener("click", play)
     //play = 함수도 변수처럼 넘길 수 있다.
+    resetBtn.addEventListener("click", reset)
+    userInput.addEventListener("focus",function(){userInput.value = ""})
 
     function pickRandomNum(){
         computerNum = Math.floor(Math.random()*100)
@@ -26,6 +33,17 @@
 
     function play(){
         let userValue = userInput.value;
+        if(userValue < 1 || userValue > 100){
+            resultArea.textContent = "1 과 100 사이 숫자를 입력해 주세요"
+            return
+        }
+        if(history.includes(userValue)){
+            resultArea.textContent = "이미 입련한 숫자입니다."
+            return
+        }
+        chance --;
+        chanceArea.textContent = `남은기회: ${chance} 번` //(`)동적인 값 / (")정적인 값
+
         if(userValue < computerNum){
             resultArea.textContent = "Up!"
         }
@@ -34,5 +52,21 @@
         }
         else {
             resultArea.textContent = "정답!"
+            playBtn.disabled = true
         }
+        history.push(userValue)
+
+        if(chance < 1){
+            playBtn.disabled = true
+        }
+    }
+
+    function reset(){
+        userInput.value = ""//입력창 정리
+        pickRandomNum()//레덤숫자 호출
+        playBtn.disabled = false
+        chance = 5;
+        chanceArea.textContent = `남은기회: ${chance} 번`
+
+        resultArea.textContent="숫자를 입력해주세요"
     }
