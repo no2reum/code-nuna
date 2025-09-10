@@ -13,10 +13,12 @@
     let userInput = document.getElementById("user-input")
     let resultArea = document.getElementById("result")
     let resetBtn = document.getElementById("resetBtn")
-    let chance = 5
+    let chance = 3
     // let gameOver = false
     let chanceArea = document.getElementById("chance-count")
     let history = []
+    let answer = document.getElementById("answer")
+    let inputHistory = document.getElementById("input-history")
 
     playBtn.addEventListener("click", play)
     //play = 함수도 변수처럼 넘길 수 있다.
@@ -26,10 +28,12 @@
     function pickRandomNum(){
         computerNum = Math.floor(Math.random()*100)
         //random => 0~1 사이의 렌덤숫자/floor -> 소숫점이하 생량/ +1 => 1~100 으로 범위 설정
-        console.log("정답", computerNum)
+        // console.log("정답", computerNum)
     }
 
     pickRandomNum() 
+    answer.textContent = `정답: ${computerNum}`;
+
 
     function play(){
         let userValue = userInput.value;
@@ -52,21 +56,37 @@
         }
         else {
             resultArea.textContent = "정답!"
+            resultArea.style.fontSize = "30px"
+            resultArea.style.fontWeight = "bold"
             playBtn.disabled = true
         }
         history.push(userValue)
+        //  console.log(history)
 
         if(chance < 1){
             playBtn.disabled = true
+            chanceArea.textContent = "기회를 모두 소진 하였습니다."
+            chanceArea.style.color = "red";  
         }
+        inputHistory.textContent = `입력history: ${history}`;
     }
+    
 
     function reset(){
-        userInput.value = ""//입력창 정리
-        pickRandomNum()//레덤숫자 호출
-        playBtn.disabled = false
-        chance = 5;
-        chanceArea.textContent = `남은기회: ${chance} 번`
+        userInput.value = "";//입력창 정리
+        pickRandomNum();//레덤숫자 호출
+        playBtn.disabled = false;
+        history = [];
+        inputHistory.textContent = ""
+        
+        chance = 3;
+        chanceArea.textContent = `남은기회: ${chance} 번`;
 
-        resultArea.textContent="숫자를 입력해주세요"
+        chanceArea.style.color = "black";
+        resultArea.style.fontSize = "16px";
+        resultArea.style.fontWeight = "normal";
+
+        answer.textContent = `정답: ${computerNum}`;
+        resultArea.textContent="숫자를 입력해주세요";
     }
+
